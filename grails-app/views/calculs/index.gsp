@@ -5,8 +5,8 @@
 	</head>
 	
 	<body>
-
 		<h1>Projets en cours</h1>
+		
 		<table> 
     		<tr> 
     			<th> Nom du projet</th>
@@ -24,39 +24,40 @@
     			<td> ${ceProjet.dueDate } </td>
 			</tr>
   			</g:each>
-
 		</table>
-		<h1> Première carte</h1>
+		
+		<h1>Première carte</h1>
 
+		<div id="map" style="height: 300px; width : 500px" ></div>
 		<script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
-		 <div id="map" style="height: 300px; width : 500px" ></div>
-		 <script>
-		 //Coordonnées géographiques de Nantes
-		 var map = L.map('map').setView([47.217, -1.542], 14);
-		 
-		 L.tileLayer('http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png', {
-			maxZoom: 18,
-			// attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>'
-		}).addTo(map);
-		
-		// Afficher les coordonées d'un clic
-		var popup = L.popup();
-		var marker=L.marker([0,0]).addTo(map);
-		
-		function onMapClick(e) {
-		popup
-			.setLatLng(e.latlng)
-			.setContent(e.latlng.toString())
-			.openOn(map);
-			
-		// var marker = L.marker(e.latlng).addTo(map);
-		marker.setLatLng(e.latlng)
-		}
+		<script>
+			// Initialiser la carte sur les coordonnées géographiques de Nantes
+			var map = L.map('map').setView([47.217, -1.542], 14);
 
-		map.on('click', onMapClick);
+			// Ajouter une couche Cloudmade sur la carte qu'on a initialisée
+			L.tileLayer('http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png', {
+				maxZoom: 18,
+				// attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>'
+			}).addTo(map);
 		
+			// Afficher les coordonnées d'un clic
+			var popup = L.popup();
+
+			// Initialiser un marqueur
+			var marker = L.marker([0,0]).addTo(map);
 		
-		</script>
-		
+			function onMapClick(e) {
+				popup
+					.setLatLng(e.latlng)
+					.setContent(e.latlng.toString())
+					.openOn(map);
+					// var marker = L.marker(e.latlng).addTo(map);
+				
+				// Définir des nouvelles coordonnées pour le marqueur qu'on a initialisé
+				marker.setLatLng(e.latlng)
+			}
+
+			map.on('click', onMapClick);
+		</script>	
 	</body>
 </html>
