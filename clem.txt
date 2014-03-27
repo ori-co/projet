@@ -1,2 +1,15 @@
 Ajout d'une ligne de code
 aaaaaaaaaaaaaaaaaaaaaaaaaa
+
+Script SQL - H2GIS
+
+CREATE ALIAS IF NOT EXISTS SPATIAL_INIT FOR
+    "org.h2gis.h2spatialext.CreateSpatialExtension.initSpatialExtension";
+CALL SPATIAL_INIT();
+
+CALL FILE_TABLE('C:/Grails/data/routes.shp', 'ROADS');
+SELECT * FROM ROADS;
+
+CALL ST_GRAPH('ROADS', 'the_geom', 0.01, false);
+
+
