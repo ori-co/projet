@@ -1,7 +1,7 @@
 <html>
 <head>
 	<meta charset="utf-8" />
-	<title> Crétation d'un itinéraire </title>
+	<title> Création d'un itinéraire </title>
 	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
 	
 </head>
@@ -57,7 +57,7 @@
 				map.addLayer(marker2);
 				marker2.bindPopup("Point d'arrivée");
 				
-				// appeler les troisème script
+				// appeler le troisième script
 				map.removeEventListener('click', onMapClick2, false);
 				map.addEventListener('click', onMapClick3, false);
 			}
