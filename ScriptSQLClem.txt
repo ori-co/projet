@@ -1,0 +1,41 @@
+Coucou les Loulous, voici ce que j'ai tappé dans H2.
+
+CALL ST_Graph('Nantes', 'the_geom', 0.01, false);
+Suite à une fonction ST_GRAPH, on a deux tables NANTES_EDGES et NANTES_NODES à partir de la table NANTES
+
+--Ajout d'une colonne d'orientation à la table nantes.edges que l'on appelle
+
+--ALTER TABLE nantes_edges ADD COLUMN eo INT;
+
+
+
+--Ajout de la notion d'orientation, eo= edges orientation 
+
+--UPDATE nantes_edges SET eo=1 WHERE SENS='Direct';
+
+--UPDATE nantes_edges SET eo=-1 WHERE SENS='Inverse';
+
+--UPDATE nantes_edges SET eo=0 WHERE SENS='Double';
+
+--En fait cette orientation ne sert que pour l'execution de la fonction ShortestPathLength. Il se trouve que la colonne SENS n'est que dalle utile pour le reste est est vide donc c'est normal que la colonne eo que l'on vient d ecreer soit remplie de 0
+
+--Ajout d'une colonne w comportant la longueur de la route
+
+--ALTER TABLE nantes_edges ADD COLUMN w DOUBLE;
+--UPDATE nantes_edges SET w=ST_LENGTH(the_geom);
+
+
+
+-- Creation d'une nouvelles table de Strongly Connected Components basé sur la direction de eo=edges orientation
+
+--CREATE TABLE scc AS SELECT * FROM ST_STRONGLYCONNECTEDCOMPONENTS(
+nantes_edges, 'directed-eo');
+
+
+
+--Essaie d'une execution de ShortestPathLength
+--SELECT * FROM ST_SHORTESTPATHLENGTH(nantes.edges,3919,3,'w','directed-eo');
+
+
+
+Les deux dernieres requêtes SQL ne s'exectuent pas (H2 n'integre pas encore ces deux requetes SQL spatial)
