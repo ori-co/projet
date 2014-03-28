@@ -12,6 +12,7 @@ SELECT * FROM ROADS;
 CALL ST_GRAPH('ROADS', 'the_geom', 0.01, false);
 
 
+
 ALTER TABLE ROADS_EDGES ADD COLUMN eo INT;                //eo: edge orientation
 
 UPDATE ROADS_EDGES SET eo=1 WHERE SENS=’Direct’;
@@ -33,11 +34,11 @@ CREATE TABLE points_selectionnes (the_geom GEOMETRY, name VARCHAR(50));
 
 INSERT INTO points_selectionnes VALUES (
 
- ( ST_Transform(ST_GeomFromText('POINT(Lat Lng)', 4326), 2154), 'point de depart'),
- ( ST_Transform(ST_GeomFromText('POINT(Lat Lng)', 4326), 2154), 'point d arrivee'));
+ ( ST_Transform(ST_GeomFromText('POINT(point_depart_lat point_depart_long)', 4326), 2154), 'point de depart'),
+ ( ST_Transform(ST_GeomFromText('POINT(point_arrivee_lat point_arrivee_long)', 4326), 2154), 'point d arrivee'));
 
 
- // Il faudra importer Lat et Lng depuis la view 
+ // il faudra importer point_depart_lat, point_depart_long, point_arrivee_lat, et point_arrivee_long depuis la view.
 
  // 4326 : code EPSG pour latlong
  // 2154 : code EPSG pour Lambert 93
@@ -47,15 +48,15 @@ INSERT INTO points_selectionnes VALUES (
  // On cherche le noeud du graphe le plus proche du point de départ sélectionné sur la carte
 
 SELECT id AS id_noeud_depart FROM ROADS_NODES
-WHERE ST_Distance( ST_Transform(ST_GeomFromText('POINT(Lat Lng)', 4326), 2154), the_geom) IN 
-	(SELECT min(ST_Distance( ST_Transform(ST_GeomFromText('POINT(Lat Lng)', 4326), 2154), the_geom)) FROM ROADS_NODES);
+WHERE ST_Distance( ST_Transform(ST_GeomFromText('POINT(point_depart_lat point_depart_long)', 4326), 2154), the_geom) IN 
+	(SELECT min(ST_Distance( ST_Transform(ST_GeomFromText('POINT(point_depart_lat point_depart_long)', 4326), 2154), the_geom)) FROM ROADS_NODES);
 
 
  // On cherche le noeud du graphe le plus proche du point d'arrivée sélectionné sur la carte
 
 SELECT id AS id_noeud_arrivee FROM ROADS_NODES
-WHERE ST_Distance( ST_Transform(ST_GeomFromText('POINT(Lat Lng)', 4326), 2154), the_geom) IN 
-	(SELECT min(ST_Distance( ST_Transform(ST_GeomFromText('POINT(Lat Lng)', 4326), 2154), the_geom)) FROM ROADS_NODES);
+WHERE ST_Distance( ST_Transform(ST_GeomFromText('POINT(point_arrivee_lat point_arrivee_long)', 4326), 2154), the_geom) IN 
+	(SELECT min(ST_Distance( ST_Transform(ST_GeomFromText('POINT(point_arrivee_lat point_arrivee_long)', 4326), 2154), the_geom)) FROM ROADS_NODES);
 
 
 
