@@ -82,5 +82,6 @@
 			var point_arrivee;
 			
 		</script>			
+		<g:textField name="nom" value="${rapportInstance?.nom}"rows="1" cols="20" />
 </body>
 </html>
